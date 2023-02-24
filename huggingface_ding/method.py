@@ -95,7 +95,7 @@ def push_model_to_hub(
             raise ValueError("model card info is invalid. please check.")
 
 
-def push_model_from_hub(repo_id):
+def pull_model_from_hub(repo_id):
 
     with tempfile.TemporaryDirectory() as workfolder:
 

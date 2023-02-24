@@ -1,1 +1,1 @@
-from .method import push_model_to_hub, push_model_from_hub
+from .method import push_model_to_hub, pull_model_from_hub

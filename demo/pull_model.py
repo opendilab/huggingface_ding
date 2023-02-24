@@ -1,7 +1,7 @@
 from ding.bonus import PPOF
-from huggingface_ding import push_model_from_hub
+from huggingface_ding import pull_model_from_hub
 
-policy_state_dict, cfg = push_model_from_hub(repo_id="OpenDILabCommunity/LunarLander-v2-ppo")
+policy_state_dict, cfg = pull_model_from_hub(repo_id="OpenDILabCommunity/LunarLander-v2-ppo")
 # Create the environment
 env_id = "lunarlander_discrete"
 # Instantiate the agent
