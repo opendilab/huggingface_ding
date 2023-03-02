@@ -9,7 +9,7 @@
 
 ## Model Description
 <!-- Provide a longer summary of what this model is. -->
-This is a simple PPO implementation to OpenAI/Gym/Box2d LunarLander-v2.
+{{ model_description | default("", true) }}
 
 - **Developed by:** {{ developers | default("[More Information Needed]", true)}}
 - **License:** {{ license | default("[More Information Needed]", true)}}
