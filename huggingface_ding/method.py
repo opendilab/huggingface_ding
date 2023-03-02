@@ -56,7 +56,7 @@ def push_model_to_hub(
         agent.batch_evaluate(1, render=True, replay_video_path=os.path.join(Path(workfolder), 'video'))
         demo_file_url = huggingface_api.upload_file(
             path_or_fileobj=_find_video_file_path(os.path.join(Path(workfolder), 'video')),
-            path_in_repo="demo_video.mp4",
+            path_in_repo="replay.mp4",
             repo_id=repo_id,
         )
 
