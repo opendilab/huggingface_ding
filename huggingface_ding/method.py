@@ -7,6 +7,9 @@ from huggingface_hub import ModelCard, ModelCardData
 from huggingface_hub import HfApi
 from huggingface_hub import hf_hub_download, snapshot_download
 
+from datetime import date
+import gym
+import ding
 from ding.config import Config, save_config_py
 from easydict import EasyDict
 
@@ -64,16 +67,17 @@ def push_model_to_hub(
             repo_id=repo_id,
         )
 
+        with open(os.path.join(Path(workfolder), 'policy_config.py'), 'r') as file:
+            python_config = file.read()
+
         card_data = ModelCardData(
             language='en',
             license='apache-2.0',
             library_name='pytorch',
             benchmark_name=env_name,
             task_name=task_name,
-            configuration_path=config_file_url,
-            demo=demo_file_url,
-            parameters_total_size=str(_calculate_model_params(agent.policy.state_dict()["model"])),
-            wandb_url=wandb_url,
+            tags=["deep-reinforcement-learning", "reinforcement-learning", "DI-engine", task_name],
+            pipeline_tag="reinforcement-learning",
         )
 
         card = ModelCard.from_template(
@@ -81,7 +85,15 @@ def push_model_to_hub(
             model_id='{}-{}-{}'.format(env_name, task_name, algo_name),
             model_description=model_description,
             developers="OpenDILab",
+            configuration_path=config_file_url,
+            di_engine_version=ding.__version__,
+            gym_version=gym.__version__,
+            date=date.today(),
+            demo=demo_file_url,
+            parameters_total_size=str(_calculate_model_params(agent.policy.state_dict()["model"])),
+            wandb_url=wandb_url,
             github_repo_url=github_repo_url,
+            python_config=python_config,
             template_path=os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "modelcard_huggingface_ding_template.md"
             ),
