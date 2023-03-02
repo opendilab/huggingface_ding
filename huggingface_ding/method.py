@@ -88,6 +88,7 @@ def push_model_to_hub(
             configuration_path=config_file_url,
             di_engine_version=ding.__version__,
             gym_version=gym.__version__,
+            pytorch_version=torch.__version__,
             date=date.today(),
             demo=demo_file_url,
             parameters_total_size=str(_calculate_model_params(agent.policy.state_dict()["model"])),
