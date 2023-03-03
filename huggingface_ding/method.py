@@ -34,7 +34,16 @@ def _calculate_model_params(model):
 
 # This method save, evaluate, generate a model card and record a replay video of your agent before pushing the repo to the hub
 def push_model_to_hub(
-    agent, env_name, task_name, algo_name, wandb_url, github_repo_url, repo_id, model_description, create_repo=True
+    agent,
+    env_name,
+    task_name,
+    algo_name,
+    wandb_url,
+    github_repo_url,
+    repo_id,
+    model_description,
+    usage_file_path,
+    create_repo=True
 ):
 
     with tempfile.TemporaryDirectory() as workfolder:
@@ -70,6 +79,12 @@ def push_model_to_hub(
         with open(os.path.join(Path(workfolder), 'policy_config.py'), 'r') as file:
             python_config = file.read()
 
+        if usage_file_path is not None and os.path.exists(usage_file_path):
+            with open(usage_file_path, 'r') as file:
+                python_code_for_usage = file.read()
+        else:
+            python_code_for_usage = ""
+
         card_data = ModelCardData(
             language='en',
             license='apache-2.0',
@@ -91,10 +106,12 @@ def push_model_to_hub(
             pytorch_version=torch.__version__,
             date=date.today(),
             demo=demo_file_url,
-            parameters_total_size=str(round(_calculate_model_params(agent.policy.state_dict()["model"]) / 256.0,2)) + " MB",
+            parameters_total_size=str(round(_calculate_model_params(agent.policy.state_dict()["model"]) / 256.0, 2)) +
+            " KB",
             wandb_url=wandb_url,
             github_repo_url=github_repo_url,
             python_config=python_config,
+            python_code_for_usage=python_code_for_usage,
             template_path=os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "modelcard_huggingface_ding_template.md"
             ),

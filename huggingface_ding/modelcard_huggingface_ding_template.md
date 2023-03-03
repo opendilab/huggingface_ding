@@ -53,3 +53,13 @@
 <!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the training procedure. -->
 
 - **Weights & Biases (wandb):** [monitor link]({{ wandb_url | default("[More Information Needed]", true)}})
+
+# Usage Snippet
+<details close>
+<summary>(Click for Details)</summary>
+
+
+```python
+{{ python_code_for_usage | default("[More Information Needed]", true)}}
+```
+</details>
