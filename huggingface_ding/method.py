@@ -91,7 +91,7 @@ def push_model_to_hub(
             pytorch_version=torch.__version__,
             date=date.today(),
             demo=demo_file_url,
-            parameters_total_size=str(_calculate_model_params(agent.policy.state_dict()["model"]) / 256.0) + " MB",
+            parameters_total_size=str(round(_calculate_model_params(agent.policy.state_dict()["model"]) / 256.0,2)) + " MB",
             wandb_url=wandb_url,
             github_repo_url=github_repo_url,
             python_config=python_config,
