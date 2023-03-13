@@ -20,7 +20,12 @@ def _find_video_file_path(record_path):
         if os.path.splitext(p)[-1] == ".mp4":
             file_list.append(p)
     file_list.sort(key=lambda fn: os.path.getmtime(os.path.join(record_path, fn)))
-    video_path = os.path.join(record_path, file_list[-2])
+    assert len(file_list)>=1, "No replay rendered."
+    if len(file_list)==1:
+        video_path = os.path.join(record_path, file_list[0])
+    else: 
+        # sometimes the late media file is a one-frame video generated after first to reset and then close the environment.
+        video_path = os.path.join(record_path, file_list[-2])
     return video_path
 
 
@@ -62,9 +67,9 @@ def push_model_to_hub(
             repo_id=repo_id,
         )
 
-        agent.batch_evaluate(1, render=True, replay_video_path=os.path.join(Path(workfolder), 'video'))
+        agent.deploy(enable_save_replay=True, replay_save_path=os.path.join(Path(workfolder), 'videos'))
         demo_file_url = huggingface_api.upload_file(
-            path_or_fileobj=_find_video_file_path(os.path.join(Path(workfolder), 'video')),
+            path_or_fileobj=_find_video_file_path(os.path.join(Path(workfolder), 'videos')),
             path_in_repo="replay.mp4",
             repo_id=repo_id,
         )
@@ -125,7 +130,7 @@ def push_model_to_hub(
             raise ValueError("model card info is invalid. please check.")
 
 
-def pull_model_from_hub(repo_id):
+def pull_model_from_hub(repo_id:str):
 
     with tempfile.TemporaryDirectory() as workfolder:
 
