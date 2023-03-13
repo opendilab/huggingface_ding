@@ -135,7 +135,7 @@ def pull_model_from_hub(repo_id:str):
     with tempfile.TemporaryDirectory() as workfolder:
 
         model_file = hf_hub_download(repo_id=repo_id, filename="model.pth", cache_dir=Path(workfolder))
-        policy_state_dict = torch.load(model_file)
+        policy_state_dict = torch.load(model_file, map_location=torch.device("cpu"))
 
         config_file = hf_hub_download(repo_id=repo_id, filename="policy_config.py", cache_dir=Path(workfolder))
         config = Config.file_to_dict(config_file)
