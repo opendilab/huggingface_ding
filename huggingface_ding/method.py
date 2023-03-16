@@ -36,7 +36,14 @@ def _calculate_model_params(model):
         Total_params += mulValue
     return Total_params
 
-
+def _get_agent_policy_state_dict(agent):
+    if hasattr(agent.policy,"state_dict"):
+        return agent.policy.state_dict()
+    elif hasattr(agent.policy,"_state_dict_learn"):
+        return agent.policy._state_dict_learn()
+    else:
+        raise ValueError("No state_dict method available for this Policy.")
+    
 # This method save, evaluate, generate a model card and record a replay video of your agent before pushing the repo to the hub
 def push_model_to_hub(
     agent,
@@ -60,7 +67,7 @@ def push_model_to_hub(
                 private=True,
             )
 
-        torch.save(agent.policy.state_dict(), os.path.join(Path(workfolder), "model.pth"))
+        torch.save(_get_agent_policy_state_dict(agent), os.path.join(Path(workfolder), "model.pth"))
         model_file_url = huggingface_api.upload_file(
             path_or_fileobj=os.path.join(Path(workfolder), "model.pth"),
             path_in_repo="model.pth",
@@ -111,7 +118,7 @@ def push_model_to_hub(
             pytorch_version=torch.__version__,
             date=date.today(),
             demo=demo_file_url,
-            parameters_total_size=str(round(_calculate_model_params(agent.policy.state_dict()["model"]) / 256.0, 2)) +
+            parameters_total_size=str(round(_calculate_model_params(_get_agent_policy_state_dict(agent)["model"]) / 256.0, 2)) +
             " KB",
             wandb_url=wandb_url,
             github_repo_url=github_repo_url,
