@@ -11,7 +11,7 @@ setup(
     name='huggingface_ding',
     version='0.0.1',
     packages=['huggingface_ding'],
-    url='https://github.com/huggingface/huggingface_sb3',
+    url='https://github.com/opendilab/huggingface_ding',
     license='Apache',
     author='OpenDILab Team',
     author_email='opendilab@pjlab.org.cn',
