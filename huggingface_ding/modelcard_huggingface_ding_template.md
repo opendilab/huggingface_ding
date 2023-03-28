@@ -22,7 +22,6 @@ This is a simple **{{ algo_name | default("[More Information Needed]", true)}}**
 git clone https://github.com/opendilab/huggingface_ding.git
 pip3 install -e ./huggingface_ding/
 # Install Dependencies If Needed
-pip3 install -r requirements.txt
 {{ installation_guide | default("", false)}}
 # Running with Trained Model
 python3 run.py
