@@ -55,7 +55,8 @@ def push_model_to_hub(
     algo_name,
     wandb_url,
     repo_id,
-    usage_file_path,
+    usage_file_path=None,
+    train_file_path=None,
     github_repo_url=None,
     github_doc_model_url=None,
     github_doc_env_url=None,
@@ -78,6 +79,12 @@ def push_model_to_hub(
                 python_code_for_usage = file.read()
         else:
             python_code_for_usage = ""
+
+        if train_file_path is not None and os.path.exists(train_file_path):
+            with open(train_file_path, 'r') as file:
+                python_code_for_train = file.read()
+        else:
+            python_code_for_train = ""
 
         model_size = str(round(_calculate_model_params(_get_agent_policy_state_dict(agent)["model"]) / 256.0, 2)) + " KB"
 
@@ -175,6 +182,7 @@ def push_model_to_hub(
             github_doc_env_url=github_doc_env_url,
             python_config=python_config,
             python_code_for_usage=python_code_for_usage,
+            python_code_for_train=python_code_for_train,
             template_path=os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "modelcard_huggingface_ding_template.md"
             ),

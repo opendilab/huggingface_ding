@@ -44,7 +44,8 @@ push_model_to_hub(
     github_repo_url="https://github.com/opendilab/DI-engine",
     github_doc_model_url="https://di-engine-docs.readthedocs.io/en/latest/12_policies/td3.html",
     github_doc_env_url="https://di-engine-docs.readthedocs.io/en/latest/13_envs/lunarlander.html",
-    usage_file_path="./benchmark/lunarlander_td3_download.py",
+    usage_file_path="./dizoo/common/td3/lunarlander_td3_download.py",
+    train_file_path="./dizoo/common/td3/lunarlander_td3.py",
     repo_id="OpenDILabCommunity/LunarLander-v2-TD3"
 )
 ```

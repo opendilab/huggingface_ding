@@ -15,23 +15,23 @@ This is a simple **{{ algo_name | default("[More Information Needed]", true)}}**
 ## Model Usage
 
 <details open>
-<summary>(Click to Collapse)</summary>
-
+<summary>1. Install the Dependencies</summary>
 ```shell
-# Install huggingface_ding
+# install huggingface_ding
 git clone https://github.com/opendilab/huggingface_ding.git
 pip3 install -e ./huggingface_ding/
-# Install Dependencies If Needed
+# install environment dependencies if needed
 {{ installation_guide | default("", false)}}
-# Running with Trained Model
-python3 run.py
 ```
 </details>
 
+<details open>
+<summary>2. Run Model by Using Huggingface_ding</summary>
+```shell
+# running with trained model
+python3 run.py
+```
 **run.py**
-<details close>
-<summary>(Click for Details)</summary>
-
 ```python
 {{ python_code_for_usage | default("[# More Information Needed]", true)}}
 ```
@@ -40,16 +40,15 @@ python3 run.py
 ## Model Training
 
 <details close>
-<summary>(Click to Details)</summary>
+<summary>(Train the Model and Push to Huggingface_hub)</summary>
 
 ```shell
-# Install huggingface_ding
-git clone https://github.com/opendilab/huggingface_ding.git
-pip3 install -e ./huggingface_ding/
-# Install Dependencies If Needed
-pip3 install -r requirements.txt
 #Training Your Own Agent
-python3 training.py
+python3 train.py
+```
+**train.py**
+```python
+{{ python_code_for_train | default("[# More Information Needed]", true)}}
 ```
 </details>
 
