@@ -15,7 +15,7 @@ This is a simple **{{ algo_name | default("[More Information Needed]", true)}}**
 ## Model Usage
 
 <details open>
-<summary>(Install the Dependencies)</summary>
+<summary>Install the Dependencies</summary>
 
 ```shell
 # install huggingface_ding
@@ -27,7 +27,7 @@ pip3 install -e ./huggingface_ding/
 </details>
 
 <details open>
-<summary>(Git Clone from Huggingface and Run the Model)</summary>
+<summary>Git Clone from Huggingface and Run the Model</summary>
 
 ```shell
 # running with trained model
@@ -55,7 +55,7 @@ python3 run.py
 ## Model Training
 
 <details close>
-<summary>(Train the Model and Push to Huggingface_hub)</summary>
+<summary>Train the Model and Push to Huggingface_hub</summary>
 
 ```shell
 #Training Your Own Agent
