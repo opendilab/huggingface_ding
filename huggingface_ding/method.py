@@ -55,8 +55,9 @@ def push_model_to_hub(
     algo_name,
     wandb_url,
     repo_id,
-    usage_file_path=None,
-    train_file_path=None,
+    usage_file_by_git_clone=None,
+    usage_file_by_huggingface_ding=None,
+    train_file=None,
     github_repo_url=None,
     github_doc_model_url=None,
     github_doc_env_url=None,
@@ -68,20 +69,28 @@ def push_model_to_hub(
     with tempfile.TemporaryDirectory() as workfolder:
         huggingface_api = HfApi()
 
-        torch.save(_get_agent_policy_state_dict(agent), os.path.join(Path(workfolder), "model.pth"))
+        torch.save(_get_agent_policy_state_dict(agent), os.path.join(Path(workfolder), "pytorch_model.bin"))
         agent.deploy(enable_save_replay=True, replay_save_path=os.path.join(Path(workfolder), 'videos'))
         save_config_py(agent.cfg, os.path.join(Path(workfolder), 'policy_config.py'))
         eval_return=agent.batch_evaluate()
         with open(os.path.join(Path(workfolder), 'policy_config.py'), 'r') as file:
             python_config = file.read()
-        if usage_file_path is not None and os.path.exists(usage_file_path):
-            with open(usage_file_path, 'r') as file:
-                python_code_for_usage = file.read()
+        if usage_file_by_git_clone is not None and os.path.exists(usage_file_by_git_clone):
+            with open(usage_file_by_git_clone, 'r') as file:
+                usage_by_git_clone = file.read()
         else:
-            python_code_for_usage = ""
+            usage_by_git_clone = ""
 
-        if train_file_path is not None and os.path.exists(train_file_path):
-            with open(train_file_path, 'r') as file:
+        if usage_file_by_huggingface_ding is not None and os.path.exists(usage_file_by_huggingface_ding):
+            with open(usage_file_by_huggingface_ding, 'r') as file:
+                usage_by_huggingface_ding = file.read()
+        else:
+            usage_by_huggingface_ding = ""
+
+
+
+        if train_file is not None and os.path.exists(train_file):
+            with open(train_file, 'r') as file:
                 python_code_for_train = file.read()
         else:
             python_code_for_train = ""
@@ -110,8 +119,8 @@ def push_model_to_hub(
             )
 
         model_file_url = huggingface_api.upload_file(
-            path_or_fileobj=os.path.join(Path(workfolder), "model.pth"),
-            path_in_repo="model.pth",
+            path_or_fileobj=os.path.join(Path(workfolder), "pytorch_model.bin"),
+            path_in_repo="pytorch_model.bin",
             repo_id=repo_id,
         )
 
@@ -181,7 +190,8 @@ def push_model_to_hub(
             github_doc_model_url=github_doc_model_url,
             github_doc_env_url=github_doc_env_url,
             python_config=python_config,
-            python_code_for_usage=python_code_for_usage,
+            usage_by_git_clone=usage_by_git_clone,
+            usage_by_huggingface_ding=usage_by_huggingface_ding,
             python_code_for_train=python_code_for_train,
             template_path=os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "modelcard_huggingface_ding_template.md"
@@ -200,7 +210,7 @@ def pull_model_from_hub(repo_id:str):
 
     with tempfile.TemporaryDirectory() as workfolder:
 
-        model_file = hf_hub_download(repo_id=repo_id, filename="model.pth", cache_dir=Path(workfolder))
+        model_file = hf_hub_download(repo_id=repo_id, filename="pytorch_model.bin", cache_dir=Path(workfolder))
         policy_state_dict = torch.load(model_file, map_location=torch.device("cpu"))
 
         config_file = hf_hub_download(repo_id=repo_id, filename="policy_config.py", cache_dir=Path(workfolder))

@@ -15,7 +15,7 @@ This is a simple **{{ algo_name | default("[More Information Needed]", true)}}**
 ## Model Usage
 
 <details open>
-<summary>1. Install the Dependencies</summary>
+<summary>Install the Dependencies</summary>
 ```shell
 # install huggingface_ding
 git clone https://github.com/opendilab/huggingface_ding.git
@@ -26,14 +26,26 @@ pip3 install -e ./huggingface_ding/
 </details>
 
 <details open>
-<summary>2. Run Model by Using Huggingface_ding</summary>
+<summary>Git Clone from Huggingface and Run the Model</summary>
 ```shell
 # running with trained model
 python3 run.py
 ```
 **run.py**
 ```python
-{{ python_code_for_usage | default("[# More Information Needed]", true)}}
+{{ usage_by_git_clone | default("[# More Information Needed]", true)}}
+```
+</details>
+
+<details open>
+<summary>Run Model by Using Huggingface_ding</summary>
+```shell
+# running with trained model
+python3 run.py
+```
+**run.py**
+```python
+{{ usage_by_huggingface_ding | default("[# More Information Needed]", true)}}
 ```
 </details>
 
