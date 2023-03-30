@@ -58,8 +58,10 @@ python3 -u run.py
 
 ## Model Training
 
+### Train the Model and Push to Huggingface_hub
+
 <details close>
-<summary>Train the Model and Push to Huggingface_hub</summary>
+<summary>(Click for Details)</summary>
 
 ```shell
 #Training Your Own Agent
