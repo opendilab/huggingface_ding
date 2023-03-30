@@ -1,8 +1,8 @@
-from ding.bonus import TD3OffPolicyAgent
+from ding.bonus import TD3Agent
 from huggingface_ding import push_model_to_hub
 
 # Instantiate the agent
-agent = TD3OffPolicyAgent("lunarlander_continuous", exp_name="LunarLander-v2-TD3")
+agent = TD3Agent("lunarlander_continuous", exp_name="LunarLander-v2-TD3")
 # Train the agent
 return_ = agent.train(step=int(4000000), collector_env_num=4, evaluator_env_num=4)
 # Push model to huggingface hub

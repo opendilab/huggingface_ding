@@ -13,9 +13,9 @@ This is a simple **{{ algo_name | default("[More Information Needed]", true)}}**
 {{ model_description | default("", false)}}
 
 ## Model Usage
-
-<details open>
-<summary>Install the Dependencies</summary>
+### Install the Dependencies
+<details close>
+<summary>(Click for Details)</summary>
 
 ```shell
 # install huggingface_ding
@@ -26,29 +26,33 @@ pip3 install -e ./huggingface_ding/
 ```
 </details>
 
-<details open>
-<summary>Git Clone from Huggingface and Run the Model</summary>
+### Git Clone from Huggingface and Run the Model
+
+<details close>
+<summary>(Click for Details)</summary>
 
 ```shell
 # running with trained model
-python3 run.py
+python3 -u run.py
 ```
 **run.py**
 ```python
-{{ usage_by_git_clone | default("[# More Information Needed]", true)}}
+{{ usage_by_git_clone | default("# [More Information Needed]", true)}}
 ```
 </details>
 
-<details open>
-<summary>Run Model by Using Huggingface_ding</summary>
+### Run Model by Using Huggingface_ding
+
+<details close>
+<summary>(Click for Details)</summary>
 
 ```shell
 # running with trained model
-python3 run.py
+python3 -u run.py
 ```
 **run.py**
 ```python
-{{ usage_by_huggingface_ding | default("[# More Information Needed]", true)}}
+{{ usage_by_huggingface_ding | default("# [More Information Needed]", true)}}
 ```
 </details>
 
@@ -59,11 +63,11 @@ python3 run.py
 
 ```shell
 #Training Your Own Agent
-python3 train.py
+python3 -u train.py
 ```
 **train.py**
 ```python
-{{ python_code_for_train | default("[# More Information Needed]", true)}}
+{{ python_code_for_train | default("# [More Information Needed]", true)}}
 ```
 </details>
 
@@ -73,7 +77,7 @@ python3 train.py
 
 
 ```python
-{{ python_config | default("[More Information Needed]", true)}}
+{{ python_config | default("# [More Information Needed]", true)}}
 ```
 </details>
 

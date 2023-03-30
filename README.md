@@ -11,13 +11,13 @@ pip install -e .
 ## Examples
 ### Case 1: I want to download a model from the Hub
 ```python
-from ding.bonus import TD3OffPolicyAgent
+from ding.bonus import TD3Agent
 from huggingface_ding import pull_model_from_hub
 
 # Pull model from Hugggingface hub
 policy_state_dict, cfg=pull_model_from_hub(repo_id="OpenDILabCommunity/LunarLander-v2-TD3")
 # Instantiate the agent
-agent = TD3OffPolicyAgent(env="lunarlander_continuous",exp_name="LunarLander-v2-TD3", cfg=cfg.exp_config, policy_state_dict=policy_state_dict)
+agent = TD3Agent(env="lunarlander_continuous",exp_name="LunarLander-v2-TD3", cfg=cfg.exp_config, policy_state_dict=policy_state_dict)
 # Continue training
 agent.train(step=5000)
 # Render the new agent performance
@@ -27,11 +27,11 @@ agent.deploy(enable_save_replay=True)
 
 ### Case 2: I trained an agent and want to upload it to the Hub
 ```python
-from ding.bonus import TD3OffPolicyAgent
+from ding.bonus import TD3Agent
 from huggingface_ding import push_model_to_hub
 
 # Instantiate the agent
-agent = TD3OffPolicyAgent("lunarlander_continuous", exp_name="LunarLander-v2-TD3")
+agent = TD3Agent("lunarlander_continuous", exp_name="LunarLander-v2-TD3")
 # Train the agent
 return_ = agent.train(step=int(4000000), collector_env_num=4, evaluator_env_num=4)
 # Push model to huggingface hub
