@@ -78,7 +78,7 @@ Arguments:
 - algo_name (:obj:`str`): the policy name of the agent.
 - wandb_url (:obj:`str`): the wandb url of the trainning process.
 - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
-- usage_file_by_git_clone (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that git cloned from huggingface hub.
+- usage_file_by_git_clone (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that git cloned from Huggingface Hub.
 - usage_file_by_huggingface_ding (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that downloaded by huggingface ding.
 - train_file (:obj:`str`): the path of a python file which describes how this model is trained.
 - github_repo_url (:obj:`str`): the github url of the DI-engine repository which the model is used.
