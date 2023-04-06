@@ -69,7 +69,9 @@ push_model_to_hub(
 # API
 
 **pull_model_from_hub**
+
     Arguments:
+
       - agent (:obj:`object`): the agent instance to be uploaded.
       - env_name (:obj:`str`): the name of environment in which the task is contained. 
       - task_name (:obj:`str`): the name of task for which the agent is designed. 
@@ -87,5 +89,7 @@ push_model_to_hub(
       - create_repo (:obj:`bool`): whether to create a new repository in huggingface hub.
 
 **push_model_to_hub**
+
     Arguments:
+    
       - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
