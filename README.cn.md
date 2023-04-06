@@ -1,26 +1,26 @@
 # Hugging Face 🤗 x OpenDILab/DI-engine
 
-English | [简体中文](./README.cn.md)
+[English](./README.md) | 简体中文
 
-> Huggingface_ding is a library for OpenDILab/DI-engine user to push and pull models from the Huggingface Hub.
+> Huggingface_ding 代码库用于提供 Huggingface Hub 的 API 封装，用于快速拉取 OpenDILab/DI-engine 的公开模型，或是用于将使用 OpenDILab/DI-engine 训练的模型推送至 Huggingface Hub.
 
 <!-- toc -->
 
-- [Installation](#Installation)
-- [Examples](#examples)
-  - [Download Model](#download-model)
-  - [Upload Model](#upload-model)
+- [安装方法](#安装方法)
+- [案例](#案例)
+  - [下载模型](#下载模型)
+  - [上传模型](#上传模型)
 
-# Installation
-## With pip
+# 安装方法
+## 使用 pip 安装
 ```
 pip install -e .
 ```
 
-# Examples
-## Download Model
+# 案例
+## 下载模型
 
-I want to download a model from the Hub
+从 Huggingface Hub 下载一个模型，部署并渲染：
 ```python
 from ding.bonus import TD3Agent
 from huggingface_ding import pull_model_from_hub
@@ -36,9 +36,9 @@ agent.deploy(enable_save_replay=True)
 
 ```
 
-## Upload Model
+## 上传模型
 
-I trained an agent and want to upload it to the Hub
+使用 DI-engine 训练了一个模型，并将其推送至 Huggingface Hub，制作 Modelcard
 ```python
 from ding.bonus import TD3Agent
 from huggingface_ding import push_model_to_hub
