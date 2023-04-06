@@ -65,7 +65,26 @@ def push_model_to_hub(
     installation_guide=None,
     create_repo=True
 ):
-
+    """
+    Overview:
+        Push OpenDILab/DI-engine models into Huggingface Hub
+    Arguments:
+        - agent (:obj:`object`): the agent instance to be uploaded.
+        - env_name (:obj:`str`): the name of environment in which the task is contained. 
+        - task_name (:obj:`str`): the name of task for which the agent is designed. 
+        - algo_name (:obj:`str`): the policy name of the agent.
+        - wandb_url (:obj:`str`): the wandb url of the trainning process.
+        - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
+        - usage_file_by_git_clone (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that git cloned from huggingface hub.
+        - usage_file_by_huggingface_ding (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that downloaded by huggingface ding.
+        - train_file (:obj:`str`): the path of a python file which describes how this model is trained.
+        - github_repo_url (:obj:`str`): the github url of the DI-engine repository which the model is used.
+        - github_doc_model_url (:obj:`str`): the github or document url of the model used.
+        - github_doc_env_url (:obj:`str`): the github or document url of the environment.
+        - model_description (:obj:`str`): a paragraph of description to the model.
+        - installation_guide (:obj:`str`): the guide for installation.
+        - create_repo (:obj:`bool`): whether to create a new repository in huggingface hub.
+    """
     with tempfile.TemporaryDirectory() as workfolder:
         huggingface_api = HfApi()
 
@@ -207,7 +226,12 @@ def push_model_to_hub(
 
 
 def pull_model_from_hub(repo_id:str):
-
+    """
+    Overview:
+        Pull public available models from Huggingface Hub
+    Arguments:
+        - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
+    """
     with tempfile.TemporaryDirectory() as workfolder:
 
         model_file = hf_hub_download(repo_id=repo_id, filename="pytorch_model.bin", cache_dir=Path(workfolder))
