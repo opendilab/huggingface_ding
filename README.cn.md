@@ -2,16 +2,25 @@
 
 [English](./README.md) | 简体中文
 
-Huggingface_ding 代码库用于提供 Huggingface Hub 的 API 封装，用于快速拉取 OpenDILab/DI-engine 的公开模型，或是用于将使用 OpenDILab/DI-engine 训练的模型推送至 Huggingface Hub.
+> Huggingface_ding 代码库用于提供 Huggingface Hub 的 API 封装，用于快速拉取 OpenDILab/DI-engine 的公开模型，或是用于将使用 OpenDILab/DI-engine 训练的模型推送至 Huggingface Hub.
 
-## 安装方法
-### 使用 pip 安装
+<!-- toc -->
+
+- [安装方法](#安装方法)
+- [案例](#案例)
+  - [下载模型](#下载模型)
+  - [上传模型](#上传模型)
+
+# 安装方法
+## 使用 pip 安装
 ```
 pip install -e .
 ```
 
-## 案例
-### 案例 1: 从 Huggingface Hub 下载一个模型，部署并渲染
+# 案例
+## 下载模型
+
+从 Huggingface Hub 下载一个模型，部署并渲染：
 ```python
 from ding.bonus import TD3Agent
 from huggingface_ding import pull_model_from_hub
@@ -27,7 +36,9 @@ agent.deploy(enable_save_replay=True)
 
 ```
 
-### 案例 2: 使用 DI-engine 训练了一个模型，并将其推送至 Huggingface Hub，制作 Modelcard
+## 上传模型
+
+使用 DI-engine 训练了一个模型，并将其推送至 Huggingface Hub，制作 Modelcard
 ```python
 from ding.bonus import TD3Agent
 from huggingface_ding import push_model_to_hub
