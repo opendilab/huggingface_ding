@@ -10,6 +10,7 @@ English | [简体中文](./README.cn.md)
 - [Examples](#examples)
   - [Download Model](#download-model)
   - [Upload Model](#upload-model)
+- [API](#api)
 
 # Installation
 ## With pip
@@ -64,3 +65,27 @@ push_model_to_hub(
     repo_id="OpenDILabCommunity/LunarLander-v2-TD3"
 )
 ```
+
+# API
+
+**pull_model_from_hub**
+    Arguments:
+      - agent (:obj:`object`): the agent instance to be uploaded.
+      - env_name (:obj:`str`): the name of environment in which the task is contained. 
+      - task_name (:obj:`str`): the name of task for which the agent is designed. 
+      - algo_name (:obj:`str`): the policy name of the agent.
+      - wandb_url (:obj:`str`): the wandb url of the trainning process.
+      - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
+      - usage_file_by_git_clone (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that git cloned from huggingface hub.
+      - usage_file_by_huggingface_ding (:obj:`str`): the path of a python file which describes ways to use the OpenDILab/DI-engine model that downloaded by huggingface ding.
+      - train_file (:obj:`str`): the path of a python file which describes how this model is trained.
+      - github_repo_url (:obj:`str`): the github url of the DI-engine repository which the model is used.
+      - github_doc_model_url (:obj:`str`): the github or document url of the model used.
+      - github_doc_env_url (:obj:`str`): the github or document url of the environment.
+      - model_description (:obj:`str`): a paragraph of description to the model.
+      - installation_guide (:obj:`str`): the guide for installation.
+      - create_repo (:obj:`bool`): whether to create a new repository in huggingface hub.
+
+**push_model_to_hub**
+    Arguments:
+      - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
