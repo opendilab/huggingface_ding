@@ -1,5 +1,15 @@
 # Hugging Face 🤗 x OpenDILab/DI-engine
 
+[![GitHub stars](https://img.shields.io/github/stars/opendilab/huggingface_ding)](https://github.com/opendilab/huggingface_ding/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/opendilab/huggingface_ding)](https://github.com/opendilab/huggingface_ding/network)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/opendilab/huggingface_ding)
+[![GitHub issues](https://img.shields.io/github/issues/opendilab/huggingface_ding)](https://github.com/opendilab/huggingface_ding/issues)
+[![GitHub pulls](https://img.shields.io/github/issues-pr/opendilab/huggingface_ding)](https://github.com/opendilab/huggingface_ding/pulls)
+[![Contributors](https://img.shields.io/github/contributors/opendilab/huggingface_ding)](https://github.com/opendilab/huggingface_ding/graphs/contributors)
+[![GitHub license](https://img.shields.io/github/license/opendilab/huggingface_ding)](https://github.com/opendilab/huggingface_ding/blob/master/LICENSE)
+[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow)](https://huggingface.co/OpenDILabCommunity)
+
+
 English | [简体中文](./README.cn.md)
 
 > Huggingface_ding is a library for OpenDILab/DI-engine user to push and pull models from the Huggingface Hub.
