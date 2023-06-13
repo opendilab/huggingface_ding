@@ -54,12 +54,12 @@ def _get_agent_policy_state_dict(agent):
 def _huggingface_api_upload_file(huggingface_api, path_or_fileobj, path_in_repo, repo_id, retry=5):
     while retry > 0:
         try:
-            huggingface_api.upload_file(
+            file_url=huggingface_api.upload_file(
                 path_or_fileobj=path_or_fileobj,
                 path_in_repo=path_in_repo,
                 repo_id=repo_id,
             )
-            break
+            return(file_url)
         except:
             retry -= 1
             assert retry > 0, "Huggingface Hub upload retry exceeded limit."
