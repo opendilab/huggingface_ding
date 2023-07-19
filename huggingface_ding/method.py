@@ -15,19 +15,24 @@ from ding.config import Config, save_config_py
 from easydict import EasyDict
 
 
-def _find_video_file_path(record_path):
-    file_list = []
-    for p in os.listdir(record_path):
-        if os.path.splitext(p)[-1] == ".mp4":
-            file_list.append(p)
-    file_list.sort(key=lambda fn: os.path.getmtime(os.path.join(record_path, fn)))
-    assert len(file_list) >= 1, "No replay rendered."
-    if len(file_list) == 1:
-        video_path = os.path.join(record_path, file_list[0])
+def _find_video_file_path(record_path, file_name=None):
+    if file_name is not None:
+        video_path = os.path.join(record_path, file_name)
+        assert os.path.exists(video_path), "No replay rendered."
+        return video_path
     else:
-        # sometimes the late media file is a one-frame video generated after first to reset and then close the environment.
-        video_path = os.path.join(record_path, file_list[-2])
-    return video_path
+        file_list = []
+        for p in os.listdir(record_path):
+            if os.path.splitext(p)[-1] == ".mp4":
+                file_list.append(p)
+        file_list.sort(key=lambda fn: os.path.getmtime(os.path.join(record_path, fn)))
+        assert len(file_list) >= 1, "No replay rendered."
+        if len(file_list) == 1:
+            video_path = os.path.join(record_path, file_list[0])
+        else:
+            # sometimes the late media file is a one-frame video generated after first to reset and then close the environment.
+            video_path = os.path.join(record_path, file_list[-2])
+        return video_path
 
 
 def _calculate_model_params(model):
@@ -109,16 +114,14 @@ def push_model_to_hub(
         huggingface_api = HfApi()
 
         torch.save(_get_agent_policy_state_dict(agent), os.path.join(Path(workfolder), "pytorch_model.bin"))
-        best_deploy_return = -np.inf
-        for i in range(10):
-            deploy_return_ = agent.deploy(
-                enable_save_replay=True, replay_save_path=os.path.join(Path(workfolder), f'videos_{i}')
-            )
-            if deploy_return_ > best_deploy_return:
-                best_deploy_return = deploy_return_
-                best_video_path = _find_video_file_path(os.path.join(Path(workfolder), f'videos_{i}'))
+        deploy_return_ = agent.deploy(
+            enable_save_replay=True, 
+            concatenate_all_replay=True, 
+            replay_save_path=os.path.join(Path(workfolder), f'videos'),
+            seed=[0,1,2,3,4,5,6,7,8,9]
+        )
+        best_video_path = _find_video_file_path(os.path.join(Path(workfolder), f'videos'),file_name='deploy.mp4')
         save_config_py(agent.cfg, os.path.join(Path(workfolder), 'policy_config.py'))
-        eval_return = agent.batch_evaluate()
         with open(os.path.join(Path(workfolder), 'policy_config.py'), 'r') as file:
             python_config = file.read()
         if usage_file_by_git_clone is not None and os.path.exists(usage_file_by_git_clone):
@@ -188,7 +191,7 @@ def push_model_to_hub(
         metric = [
             {
                 "name": "mean_reward",
-                "value": str(round(eval_return.eval_value, 2)) + " +/- " + str(round(eval_return.eval_value_std, 2)),
+                "value": str(round(deploy_return_.eval_value, 2)) + " +/- " + str(round(deploy_return_.eval_value_std, 2)),
                 "type": "mean_reward",
             }
         ]
