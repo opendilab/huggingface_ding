@@ -5,7 +5,7 @@ from huggingface_ding import pull_model_from_hub
 policy_state_dict, cfg = pull_model_from_hub(repo_id="OpenDILabCommunity/LunarLander-v2-TD3")
 # Instantiate the agent
 agent = TD3Agent(
-    env="lunarlander_continuous",
+    env_id="LunarLanderContinuous-v2",
     exp_name="LunarLander-v2-TD3",
     cfg=cfg.exp_config,
     policy_state_dict=policy_state_dict
