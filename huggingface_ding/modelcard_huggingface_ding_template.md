@@ -6,11 +6,10 @@
 
 ## Model Description
 <!-- Provide a longer summary of what this model is. -->
-This is a simple **{{ algo_name | default("[More Information Needed]", true)}}** implementation to {{ benchmark_name | default("[More Information Needed]", true)}} **{{ task_name | default("[More Information Needed]", true)}}** by using {{ platform_info | default("[DI-engine](https://github.com/opendilab/di-engine) and [DI-zoo](https://github.com/opendilab/DI-engine/tree/main/dizoo)", true)}}.
 
-**DI-engine** is a python library for solving general decision intelligence problems, which is based on implementations of reinforcement learning framework using PyTorch or JAX. This library aims to standardize the reinforcement learning framework across different algorithms, benchmarks, environments, and to support both academic researches and prototype applications. Besides, self-customized training pipelines and applications are supported  by reusing different abstraction levels of DI-engine reinforcement learning framework.
+This implementation applies **{{ algo_name | default("[More Information Needed]", true)}}** to the {{ benchmark_name | default("[More Information Needed]", true)}} **{{ task_name | default("[More Information Needed]", true)}}** environment using {{ platform_info | default("[DI-engine](https://github.com/opendilab/di-engine) and [DI-zoo](https://github.com/opendilab/DI-engine/tree/main/dizoo)", true)}}.
 
-{{ model_description | default("", false)}}
+{{ model_description | default("**DI-engine** is a Python library for decision intelligence problems. It establishes standardization across various reinforcement learning algorithms and benchmarks. Built on PyTorch and JAX, it supports both academic research and prototype applications, offering customization of training pipelines.", false)}}
 
 ## Model Usage
 ### Install the Dependencies
