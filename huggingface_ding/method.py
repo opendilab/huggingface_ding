@@ -76,8 +76,8 @@ def push_model_to_hub(
     env_name,
     task_name,
     algo_name,
-    wandb_url,
     repo_id,
+    wandb_url=None,
     usage_file_by_git_clone=None,
     usage_file_by_huggingface_ding=None,
     train_file=None,
@@ -86,6 +86,7 @@ def push_model_to_hub(
     github_doc_env_url=None,
     model_description=None,
     installation_guide=None,
+    platform_info=None,
     create_repo=True
 ):
     """
@@ -96,8 +97,8 @@ def push_model_to_hub(
         - env_name (:obj:`str`): the name of environment in which the task is contained. 
         - task_name (:obj:`str`): the name of task for which the agent is designed. 
         - algo_name (:obj:`str`): the policy name of the agent.
-        - wandb_url (:obj:`str`): the wandb url of the trainning process.
         - repo_id (:obj:`str`): the repository id of Huggingface Hub where the model is stored.
+        - wandb_url (:obj:`str`): the wandb url of the trainning process.
         - usage_file_by_git_clone (:obj:`str`): the path of a python file which describes ways to use the \
             OpenDILab/DI-engine model that git cloned from huggingface hub.
         - usage_file_by_huggingface_ding (:obj:`str`): the path of a python file which describes ways to use \
@@ -108,6 +109,7 @@ def push_model_to_hub(
         - github_doc_env_url (:obj:`str`): the github or document url of the environment.
         - model_description (:obj:`str`): a paragraph of description to the model.
         - installation_guide (:obj:`str`): the guide for installation.
+        - platform_info (:obj:`str`): the platform information.
         - create_repo (:obj:`bool`): whether to create a new repository in huggingface hub.
     """
     with tempfile.TemporaryDirectory() as workfolder:
@@ -121,7 +123,12 @@ def push_model_to_hub(
             seed=[0,1,2,3,4,5,6,7,8,9]
         )
         best_video_path = _find_video_file_path(os.path.join(Path(workfolder), f'videos'),file_name='deploy.mp4')
-        save_config_py(agent.cfg, os.path.join(Path(workfolder), 'policy_config.py'))
+        if hasattr(agent, "origin_cfg"):
+            save_config_py(agent.origin_cfg, os.path.join(Path(workfolder), 'policy_config.py'))
+        elif hasattr(agent, "cfg"):
+            save_config_py(agent.cfg, os.path.join(Path(workfolder), 'policy_config.py'))
+        else:
+            raise ValueError("No config available for this Agent.")
         with open(os.path.join(Path(workfolder), 'policy_config.py'), 'r') as file:
             python_config = file.read()
         if usage_file_by_git_clone is not None and os.path.exists(usage_file_by_git_clone):
@@ -150,16 +157,19 @@ def push_model_to_hub(
             model_description = ""
 
         if installation_guide is None:
-            installation_guide = ""
+            installation_guide = "<TODO>"
+
+        if wandb_url is None:
+            wandb_url = "<TODO>"
 
         if github_repo_url is None:
-            github_repo_url = "https://github.com/opendilab/DI-engine"
+            github_repo_url = "<TODO>"
 
         if github_doc_model_url is None:
-            github_repo_url = "https://di-engine-docs.readthedocs.io"
+            github_doc_model_url = "<TODO>"
 
         if github_doc_env_url is None:
-            github_repo_url = "https://di-engine-docs.readthedocs.io"
+            github_doc_env_url = "<TODO>"
 
         if create_repo:
             huggingface_api.create_repo(
@@ -215,8 +225,8 @@ def push_model_to_hub(
                                     "type": "reinforcement-learning",
                                 },
                                 "dataset": {
-                                    "name": '{}-{}'.format(env_name, task_name),
-                                    "type": '{}-{}'.format(env_name, task_name),
+                                    "name": task_name,
+                                    "type": task_name,
                                 },
                                 "metrics": metric
                             },
@@ -230,6 +240,7 @@ def push_model_to_hub(
             card_data,
             model_id='{}-{}-{}'.format(env_name, task_name, algo_name),
             algo_name=algo_name,
+            platform_info=platform_info,
             model_description=model_description,
             installation_guide=installation_guide,
             developers="OpenDILab",
